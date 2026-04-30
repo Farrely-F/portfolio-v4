@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
-import { ThemeToggle } from "@/components/shared/theme-toggle"
-import { resumeData } from "@/lib/data"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
+import { resumeData } from "@/lib/data";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -13,17 +13,17 @@ const navLinks = [
   { label: "Awards", href: "#awards" },
   { label: "Education", href: "#education" },
   { label: "Contact", href: "#contact" },
-]
+];
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    window.addEventListener("scroll", onScroll)
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
@@ -39,7 +39,7 @@ export function Navbar() {
             href="#"
             className="font-sans text-sm font-semibold tracking-tight text-foreground hover:text-brand transition-colors"
           >
-            {resumeData.name}
+            xfarr.dev
           </a>
 
           {/* Desktop Nav */}
@@ -105,5 +105,5 @@ export function Navbar() {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }

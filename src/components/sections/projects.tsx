@@ -31,9 +31,10 @@ export function ProjectsSection() {
                 <motion.div
                   whileHover={{ x: 4 }}
                   transition={{ duration: 0.2 }}
-                  className="group border-b border-border py-8 md:py-10 cursor-default"
+                  className="group border-b border-border py-10 md:py-12 cursor-default"
                 >
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-4">
+                  {/* Header row */}
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-6">
                     <div className="flex items-center gap-3">
                       <h3 className="font-sans text-xl md:text-2xl font-semibold tracking-tight text-foreground group-hover:text-brand transition-colors duration-300">
                         {project.name}
@@ -48,12 +49,20 @@ export function ProjectsSection() {
                     </span>
                   </div>
 
-                  <p className="text-base leading-relaxed text-foreground/70 mb-4 max-w-xl">
-                    {project.description}
-                  </p>
+                  {/* Story — the narrative arc */}
+                  {project.story ? (
+                    <p className="text-base leading-[1.75] text-foreground/80 mb-5 max-w-2xl">
+                      {project.story}
+                    </p>
+                  ) : (
+                    <p className="text-base leading-relaxed text-foreground/70 mb-4 max-w-xl">
+                      {project.description}
+                    </p>
+                  )}
 
+                  {/* Technical bullets */}
                   {project.bullets.length > 0 && (
-                    <ul className="mb-4 space-y-1">
+                    <ul className="mb-5 space-y-1.5">
                       {project.bullets.map((bullet, i) => (
                         <li
                           key={i}
@@ -66,6 +75,19 @@ export function ProjectsSection() {
                     </ul>
                   )}
 
+                  {/* Tools */}
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 mb-4">
+                    {project.tools.slice(0, 6).map((tool) => (
+                      <span
+                        key={tool}
+                        className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Categories */}
                   <div className="flex flex-wrap gap-2">
                     {project.categories.map((cat) => (
                       <span

@@ -36,39 +36,30 @@ export function HeroSection() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="space-y-10"
         >
-          {/* Top row: Location + Status */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground"
-            >
-              {resumeData.location}
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-2"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-              </span>
-              <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-                Open to opportunities
-              </span>
-            </motion.div>
-          </div>
+          {/* Top row: Location */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.6,
+              delay: 0.1,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground"
+          >
+            {resumeData.location}
+          </motion.p>
 
           {/* Name */}
           <div className="space-y-4">
             <motion.h1
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="font-sans text-[clamp(2.8rem,9vw,7rem)] font-semibold leading-[0.92] tracking-tight text-foreground"
             >
               {resumeData.name}
@@ -79,19 +70,29 @@ export function HeroSection() {
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.8,
+              delay: 0.35,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="h-px bg-border origin-left max-w-md"
           />
 
-          {/* Title & Tagline */}
+          {/* Hook line — the story thesis */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-xl space-y-4"
+            transition={{
+              duration: 0.7,
+              delay: 0.45,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="max-w-2xl space-y-4"
           >
             <p className="font-sans text-lg md:text-xl font-medium leading-relaxed text-foreground">
-              {resumeData.title} — {resumeData.about.slice(0, 90)}...
+              Philosophy-trained. Engineering-obsessed. I build front-end
+              experiences where users meet emerging tech — from Web3 payment
+              rails to AI agent dashboards.
             </p>
           </motion.div>
 
@@ -99,7 +100,11 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 0.6,
+              delay: 0.6,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="flex flex-wrap items-center gap-6 pt-2"
           >
             <a

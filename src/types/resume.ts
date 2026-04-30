@@ -27,6 +27,7 @@ export interface Project {
   name: string
   period: string
   description: string
+  story?: string
   bullets: string[]
   tools: string[]
   categories: string[]

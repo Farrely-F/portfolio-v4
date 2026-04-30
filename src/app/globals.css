@@ -145,18 +145,30 @@
   ::selection {
     background-color: rgba(184, 92, 56, 0.25);
   }
+}
 
-  /* Reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+/* Smooth theme transitions — only color properties, GPU-friendly */
+@layer base {
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition-property: background-color, border-color, color, fill, stroke, opacity;
+    transition-timing-function: ease-out;
+    transition-duration: 350ms;
+  }
+}
+
+/* Reduced motion: instant theme switch, no transitions */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition-duration: 0.01ms !important;
+    transition-property: none !important;
   }
 }

@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { useTheme } from "next-themes"
 
 interface Point {
   x: number
@@ -11,21 +10,28 @@ interface Point {
   phase: number
 }
 
+function getCanvasColor(canvas: HTMLCanvasElement): string {
+  const style = getComputedStyle(canvas)
+  const color = style.color
+  // Parse "rgb(r, g, b)" or "rgba(r, g, b, a)"
+  const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
+  if (match) {
+    return `${match[1]}, ${match[2]}, ${match[3]}`
+  }
+  return "26, 26, 26"
+}
+
 export function GenerativeGrid() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef({ x: -1000, y: -1000 })
   const rafRef = useRef<number>(0)
-  const { resolvedTheme } = useTheme()
-
-  const isDark = resolvedTheme === "dark"
-  const lineColor = isDark ? "232, 228, 223" : "26, 26, 26"
 
   useEffect(() => {
-    const c = canvasRef.current
-    if (!c) return
+    const canvas = canvasRef.current
+    if (!canvas) return
 
-    const context = c.getContext("2d")
-    if (!context) return
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
 
     let width = 0
     let height = 0
@@ -38,8 +44,7 @@ export function GenerativeGrid() {
     const dotOpacity = 0.12
 
     function resize() {
-      const canvas = canvasRef.current
-      if (!canvas) return
+      if (!canvas || !ctx) return
       const parent = canvas.parentElement
       if (!parent) return
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -49,20 +54,20 @@ export function GenerativeGrid() {
       canvas.height = height * dpr
       canvas.style.width = `${width}px`
       canvas.style.height = `${height}px`
-      context!.scale(dpr, dpr)
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
       points.length = 0
       const cols = Math.ceil(width / spacing) + 1
       const rows = Math.ceil(height / spacing) + 1
 
       for (let r = 0; r < rows; r++) {
-        for (let col = 0; col < cols; col++) {
+        for (let c = 0; c < cols; c++) {
           const jitterX = (Math.random() - 0.5) * 8
           const jitterY = (Math.random() - 0.5) * 8
           points.push({
-            x: col * spacing + jitterX,
+            x: c * spacing + jitterX,
             y: r * spacing + jitterY,
-            baseX: col * spacing + jitterX,
+            baseX: c * spacing + jitterX,
             baseY: r * spacing + jitterY,
             phase: Math.random() * Math.PI * 2,
           })
@@ -71,11 +76,13 @@ export function GenerativeGrid() {
     }
 
     function draw() {
-      context!.clearRect(0, 0, width, height)
+      if (!ctx || !canvas) return
+      ctx.clearRect(0, 0, width, height)
       time += driftSpeed
 
       const mouse = mouseRef.current
       const mouseInfluence = 180
+      const lineColor = getCanvasColor(canvas)
 
       // Update point positions with gentle drift
       for (const p of points) {
@@ -86,7 +93,7 @@ export function GenerativeGrid() {
       }
 
       // Draw connecting lines between nearby points
-      context!.lineWidth = 0.5
+      ctx.lineWidth = 0.5
       for (let i = 0; i < points.length; i++) {
         const p1 = points[i]
         for (let j = i + 1; j < points.length; j++) {
@@ -107,11 +114,11 @@ export function GenerativeGrid() {
             )
 
             const alpha = lineOpacity * (1 - dist / (spacing * 1.6)) * (1 + proximityBoost * 0.5)
-            context!.strokeStyle = `rgba(${lineColor}, ${alpha})`
-            context!.beginPath()
-            context!.moveTo(p1.x, p1.y)
-            context!.lineTo(p2.x, p2.y)
-            context!.stroke()
+            ctx.strokeStyle = `rgba(${lineColor}, ${alpha})`
+            ctx.beginPath()
+            ctx.moveTo(p1.x, p1.y)
+            ctx.lineTo(p2.x, p2.y)
+            ctx.stroke()
           }
         }
       }
@@ -122,17 +129,16 @@ export function GenerativeGrid() {
         const proximityBoost = Math.max(0, 1 - mouseDist / mouseInfluence)
         const alpha = dotOpacity * (1 + proximityBoost * 0.8)
 
-        context!.fillStyle = `rgba(${lineColor}, ${alpha})`
-        context!.beginPath()
-        context!.arc(p.x, p.y, dotRadius * (1 + proximityBoost * 0.5), 0, Math.PI * 2)
-        context!.fill()
+        ctx.fillStyle = `rgba(${lineColor}, ${alpha})`
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, dotRadius * (1 + proximityBoost * 0.5), 0, Math.PI * 2)
+        ctx.fill()
       }
 
       rafRef.current = requestAnimationFrame(draw)
     }
 
     function handleMouseMove(e: MouseEvent) {
-      const canvas = canvasRef.current
       if (!canvas) return
       const rect = canvas.getBoundingClientRect()
       mouseRef.current = {
@@ -149,25 +155,21 @@ export function GenerativeGrid() {
     draw()
 
     window.addEventListener("resize", resize)
-    c.addEventListener("mousemove", handleMouseMove)
-    c.addEventListener("mouseleave", handleMouseLeave)
+    canvas.addEventListener("mousemove", handleMouseMove)
+    canvas.addEventListener("mouseleave", handleMouseLeave)
 
     return () => {
       cancelAnimationFrame(rafRef.current)
       window.removeEventListener("resize", resize)
-      const canvas = canvasRef.current
-      if (canvas) {
-        canvas.removeEventListener("mousemove", handleMouseMove)
-        canvas.removeEventListener("mouseleave", handleMouseLeave)
-      }
+      canvas.removeEventListener("mousemove", handleMouseMove)
+      canvas.removeEventListener("mouseleave", handleMouseLeave)
     }
-  }, [lineColor])
+  }, [])
 
   return (
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full pointer-events-auto"
-      style={{ opacity: 1 }}
     />
   )
 }

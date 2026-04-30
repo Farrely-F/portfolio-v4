@@ -29,6 +29,8 @@ export const resumeData: ResumeData = {
       period: "Aug 2025",
       description:
         "Borderless crypto payment for content creators with full ownership.",
+      story:
+        "Most creators lose a cut of every dollar to platforms. Relynk asks: what if they owned the entire stack? I built the front end for a creator-first payment layer on LISK, Scroll, and Morph — abstracting wallet connections, on-ramping, and IPFS content hosting into something that feels like a familiar checkout. The goal was not to impress crypto-natives. It was to make a first-time user feel safe sending their first stablecoin.",
       bullets: [
         "Integrated with LISK, Scroll, and Morph (currently in testnet).",
       ],
@@ -47,6 +49,8 @@ export const resumeData: ResumeData = {
       period: "Aug 2025",
       description:
         "Create, train, and manage AI agent seamlessly.",
+      story:
+        "AI agents are powerful, but the interfaces to build them are usually built for engineers. Chatto is a dashboard where non-technical users can create, train, and deploy agents without touching a config file. I designed the interface around a mental model people already understand — chat — then layered in training pipelines, payment integration, and microservice orchestration underneath. The hard part was making complexity feel like conversation.",
       bullets: [
         "Integrate with payment and AI agent microservices.",
       ],
@@ -66,6 +70,8 @@ export const resumeData: ResumeData = {
       period: "Oct 2024",
       description:
         "Connect and onboard partner for HORUS payment gateway through partner dashboard.",
+      story:
+        "Payment gateways live or die by how fast a partner can go from signup to first transaction. The old HORUS onboarding was a chain of emails and PDFs. I rebuilt it as a self-serve dashboard where partners complete KYC, configure API keys, and monitor settlements in one place. Every screen was designed around one question: what does this partner need to see right now to feel confident?",
       bullets: [
         "Seamless, secure, intuitive UI for partner to onboard and get used.",
       ],
@@ -77,6 +83,8 @@ export const resumeData: ResumeData = {
       period: "Mar 2024",
       description:
         "Multi-tenancy commerce app for merchant to sell digital product such as mobile credit, internet credit, and game voucher.",
+      story:
+        "Small merchants in Indonesia sell digital goods — phone credit, game vouchers, data packages — but most lack the infrastructure to do it at scale. INSTN.ID is a multi-tenant platform where each merchant gets their own branded storefront, inventory, and pricing layer, all feeding into the HORUS payment rail. I built the front end to feel like a single-tenant app even though every route, theme, and transaction flow is dynamically scoped.",
       bullets: [
         "Integrate with company payment gateway HORUS for seamless transaction.",
       ],
@@ -88,6 +96,8 @@ export const resumeData: ResumeData = {
       period: "Dec 2023 – Feb 2024",
       description:
         "Gaming and entertainment media editorial.",
+      story:
+        "Editorial teams should write, not wrestle with CMS buttons. Gamefinity is a gaming media platform where editors publish in WordPress and readers experience a fast, modern front end built in Next.js. The architecture challenge was keeping editorial workflows untouched while delivering sub-second page loads and a reading experience that feels native, not templated.",
       bullets: [
         "Integrate with WordPress as a headless CMS to write and store content then consumed by the front end.",
       ],

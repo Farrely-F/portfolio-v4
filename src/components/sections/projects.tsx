@@ -36,13 +36,27 @@ export function ProjectsSection() {
                   {/* Header row */}
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-6">
                     <div className="flex items-center gap-3">
-                      <h3 className="font-sans text-xl md:text-2xl font-semibold tracking-tight text-foreground group-hover:text-brand transition-colors duration-300">
-                        {project.name}
-                      </h3>
-                      <ArrowUpRight
-                        size={18}
-                        className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:text-brand"
-                      />
+                      {project.link ? (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`View ${project.name} (opens in a new tab)`}
+                          className="inline-flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                        >
+                          <h3 className="font-sans text-xl md:text-2xl font-semibold tracking-tight text-foreground group-hover:text-brand transition-colors duration-300">
+                            {project.name}
+                          </h3>
+                          <ArrowUpRight
+                            size={18}
+                            className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:text-brand"
+                          />
+                        </a>
+                      ) : (
+                        <h3 className="font-sans text-xl md:text-2xl font-semibold tracking-tight text-foreground group-hover:text-brand transition-colors duration-300">
+                          {project.name}
+                        </h3>
+                      )}
                     </div>
                     <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground shrink-0">
                       {project.period}

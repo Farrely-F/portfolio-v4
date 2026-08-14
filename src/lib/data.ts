@@ -64,6 +64,7 @@ export const resumeData: ResumeData = {
         "LangChain",
       ],
       categories: ["AI Agent", "LLM", "Dashboard", "SaaS"],
+      link: "https://chatto.co.id",
     },
     {
       name: "Horus Partner Dashboard",
@@ -77,6 +78,7 @@ export const resumeData: ResumeData = {
       ],
       tools: ["Next.js", "TypeScript", "Tailwind CSS"],
       categories: ["Finance", "Payment Gateway", "SaaS"],
+      link: "https://horus.id",
     },
     {
       name: "INSTN.ID",
@@ -90,6 +92,7 @@ export const resumeData: ResumeData = {
       ],
       tools: ["Next.js", "TypeScript", "Tailwind CSS"],
       categories: ["E-Commerce", "Multi-tenancy"],
+      link: "https://topup.gamefinity.id",
     },
     {
       name: "Gamefinity",
@@ -103,6 +106,7 @@ export const resumeData: ResumeData = {
       ],
       tools: ["Next.js", "TypeScript", "Tailwind CSS", "WordPress"],
       categories: ["Editorial", "Article", "Entertainment", "Lifestyle"],
+      link: "https://gamefinity.id",
     },
   ],
   awards: [

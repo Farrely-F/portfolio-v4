@@ -1,6 +1,7 @@
 import { FadeIn } from "@/components/motion/fade-in"
 import { StaggerContainer, StaggerItem } from "@/components/motion/stagger-container"
 import { resumeData } from "@/lib/data"
+import { ArrowUpRight } from "lucide-react"
 
 export function CourseworkSection() {
   return (
@@ -33,9 +34,27 @@ export function CourseworkSection() {
                     <div className="absolute left-[-3px] top-2.5 w-[7px] h-[7px] bg-muted-foreground hidden md:block" />
 
                     <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 mb-3">
-                      <h3 className="font-sans text-lg md:text-xl font-semibold tracking-tight text-foreground">
-                        {course.title}
-                      </h3>
+                      {course.link ? (
+                        <a
+                          href={course.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`View certificate for ${course.title} (opens in a new tab)`}
+                          className="group inline-flex items-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                        >
+                          <h3 className="font-sans text-lg md:text-xl font-semibold tracking-tight text-foreground group-hover:text-brand transition-colors">
+                            {course.title}
+                          </h3>
+                          <ArrowUpRight
+                            size={14}
+                            className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-all group-hover:text-brand"
+                          />
+                        </a>
+                      ) : (
+                        <h3 className="font-sans text-lg md:text-xl font-semibold tracking-tight text-foreground">
+                          {course.title}
+                        </h3>
+                      )}
                       <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground shrink-0">
                         {course.period}
                       </span>

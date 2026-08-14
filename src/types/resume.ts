@@ -31,6 +31,7 @@ export interface Project {
   bullets: string[]
   tools: string[]
   categories: string[]
+  link?: string
 }
 
 export interface Award {
@@ -46,6 +47,7 @@ export interface Course {
   period: string
   bullets: string[]
   tools: string[]
+  link?: string
 }
 
 export interface Education {

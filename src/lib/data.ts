@@ -10,16 +10,16 @@ export const resumeData: ResumeData = {
   github: "github.com/Farrely-F",
   phone: "0877 7492 3830",
   about:
-    "Front-End Engineer with 3+ years of experience building scalable, high-performance web applications using Next.js, TypeScript, and Tailwind CSS. Skilled in integrating blockchain, AI, and payment systems. Proven track record in delivering user-focused solutions, from ideation to deployment.",
+    "Front-End Engineer with 3+ years of experience building scalable, high-performance web applications using Next.js, TypeScript, and Tailwind CSS. Skilled in integrating blockchain, AI, and payment systems into production products.",
   experience: [
     {
       role: "Front End Engineer",
       company: "SLTR Group",
       period: "Sept 2023 – Present",
       bullets: [
-        "Delivering unwavering support to the company and its numerous departments, which are in constant pursuit of innovative, tech-driven solutions, fulfilling the critical demands that arise within the realm of front-end engineering.",
-        "Engage in dynamic collaboration with fellow engineering experts and the quality assurance team to craft unparalleled user experiences that captivate and delight the end-user.",
-        "Produce code that is not only maintainable and scalable but also exemplarily clean, by harnessing the most cutting-edge best practices. This is achieved through rigorous peer code reviews and meticulous preparation of comprehensive code documentation.",
+        "Support front-end engineering work across the company's departments, building solutions for their product requirements.",
+        "Collaborate with engineers and the QA team to build user experiences that meet real user needs.",
+        "Write clean, maintainable, and scalable code, backed by peer code review and thorough documentation.",
       ],
     },
   ],
@@ -30,7 +30,7 @@ export const resumeData: ResumeData = {
       description:
         "Borderless crypto payment for content creators with full ownership.",
       story:
-        "Most creators lose a cut of every dollar to platforms. Relynk asks: what if they owned the entire stack? I built the front end for a creator-first payment layer on LISK, Scroll, and Morph — abstracting wallet connections, on-ramping, and IPFS content hosting into something that feels like a familiar checkout. The goal was not to impress crypto-natives. It was to make a first-time user feel safe sending their first stablecoin.",
+        "Most creators lose a cut of every dollar to platforms. Relynk asks: what if they owned the entire stack? I built the front end for a creator-first payment layer on LISK, Scroll, and Morph, abstracting wallet connections, on-ramping, and IPFS content hosting into something that feels like a familiar checkout. The goal was not to impress crypto-natives. It was to make a first-time user feel safe sending their first stablecoin.",
       bullets: [
         "Integrated with LISK, Scroll, and Morph (currently in testnet).",
       ],
@@ -50,7 +50,7 @@ export const resumeData: ResumeData = {
       description:
         "Create, train, and manage AI agent seamlessly.",
       story:
-        "AI agents are powerful, but the interfaces to build them are usually built for engineers. Chatto is a dashboard where non-technical users can create, train, and deploy agents without touching a config file. I designed the interface around a mental model people already understand — chat — then layered in training pipelines, payment integration, and microservice orchestration underneath. The hard part was making complexity feel like conversation.",
+        "AI agents are powerful, but the interfaces to build them are usually built for engineers. Chatto is a dashboard where non-technical users can create, train, and deploy agents without touching a config file. I designed the interface around a mental model people already understand: chat. Then I layered in training pipelines, payment integration, and microservice orchestration underneath. The hard part was making complexity feel like conversation.",
       bullets: [
         "Integrate with payment and AI agent microservices.",
       ],
@@ -84,7 +84,7 @@ export const resumeData: ResumeData = {
       description:
         "Multi-tenancy commerce app for merchant to sell digital product such as mobile credit, internet credit, and game voucher.",
       story:
-        "Small merchants in Indonesia sell digital goods — phone credit, game vouchers, data packages — but most lack the infrastructure to do it at scale. INSTN.ID is a multi-tenant platform where each merchant gets their own branded storefront, inventory, and pricing layer, all feeding into the HORUS payment rail. I built the front end to feel like a single-tenant app even though every route, theme, and transaction flow is dynamically scoped.",
+        "Small merchants in Indonesia sell digital goods (phone credit, game vouchers, data packages), but most lack the infrastructure to do it at scale. INSTN.ID is a multi-tenant platform where each merchant gets their own branded storefront, inventory, and pricing layer, all feeding into the HORUS payment rail. I built the front end to feel like a single-tenant app even though every route, theme, and transaction flow is dynamically scoped.",
       bullets: [
         "Integrate with company payment gateway HORUS for seamless transaction.",
       ],

@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Farrely Firenza — Front-End Engineer",
+  title: "Farrely Firenza | Front-End Engineer",
   description:
     "Front-End Engineer with 3+ years of experience building scalable, high-performance web applications using Next.js, TypeScript, and Tailwind CSS. Skilled in integrating blockchain, AI, and payment systems.",
   keywords: [
@@ -37,13 +37,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://site.xfarr.dev",
     siteName: "Farrely Firenza",
-    title: "Farrely Firenza — Front-End Engineer",
+    title: "Farrely Firenza | Front-End Engineer",
     description:
       "Front-End Engineer with 3+ years of experience building scalable, high-performance web applications using Next.js, TypeScript, and Tailwind CSS.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Farrely Firenza — Front-End Engineer",
+    title: "Farrely Firenza | Front-End Engineer",
     description:
       "Front-End Engineer with 3+ years of experience building scalable, high-performance web applications.",
   },

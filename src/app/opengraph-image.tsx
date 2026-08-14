@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og"
 
 export const runtime = "edge"
 
-export const alt = "Farrely Firenza — Front-End Engineer"
+export const alt = "Farrely Firenza | Front-End Engineer"
 export const size = {
   width: 1200,
   height: 630,
@@ -92,7 +92,7 @@ export default async function Image() {
               maxWidth: "640px",
             }}
           >
-            Front-End Engineer — I deconstruct ideas before I build them.
+            Front-End Engineer. I deconstruct ideas before I build them.
           </p>
 
           <p
@@ -104,7 +104,7 @@ export default async function Image() {
               maxWidth: "600px",
             }}
           >
-            Building interfaces where users meet emerging tech — from Web3
+            Building interfaces where users meet emerging tech, from Web3
             payment rails to AI agent dashboards.
           </p>
         </div>

@@ -91,7 +91,7 @@ export function HeroSection() {
           >
             <p className="font-sans text-lg md:text-xl font-medium leading-relaxed text-foreground">
               Philosophy-trained. Engineering-obsessed. I build front-end
-              experiences where users meet emerging tech — from Web3 payment
+              experiences where users meet emerging tech, from Web3 payment
               rails to AI agent dashboards.
             </p>
           </motion.div>

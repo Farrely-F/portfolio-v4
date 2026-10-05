@@ -42,7 +42,7 @@ export function CourseworkSection() {
                           aria-label={`View certificate for ${course.title} (opens in a new tab)`}
                           className="group inline-flex items-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                         >
-                          <h3 className="font-sans text-lg md:text-xl font-semibold tracking-tight text-foreground group-hover:text-brand transition-colors">
+                          <h3 className="font-display text-xl md:text-3xl font-semibold tracking-tight text-foreground group-hover:text-brand transition-colors">
                             {course.title}
                           </h3>
                           <ArrowUpRight
@@ -51,7 +51,7 @@ export function CourseworkSection() {
                           />
                         </a>
                       ) : (
-                        <h3 className="font-sans text-lg md:text-xl font-semibold tracking-tight text-foreground">
+                        <h3 className="font-display text-xl md:text-3xl font-semibold tracking-tight text-foreground">
                           {course.title}
                         </h3>
                       )}

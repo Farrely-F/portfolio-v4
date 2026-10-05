@@ -26,7 +26,7 @@ export function ExperienceSection() {
               <StaggerItem key={exp.company}>
                 <div className="pb-12 md:pb-16 border-b border-border last:border-0">
                   <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 mb-6">
-                    <h3 className="font-sans text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
+                    <h3 className="font-display text-3xl md:text-5xl font-semibold tracking-tight text-foreground">
                       {exp.company}
                     </h3>
                     <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">

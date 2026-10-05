@@ -26,7 +26,7 @@ export function EducationSection() {
               <StaggerItem key={edu.institution}>
                 <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 pb-10 border-b border-border last:border-0">
                   <div>
-                    <h3 className="font-sans text-xl md:text-2xl font-semibold tracking-tight text-foreground mb-1">
+                    <h3 className="font-display text-2xl md:text-4xl font-semibold tracking-tight text-foreground mb-1">
                       {edu.institution}
                     </h3>
                     <p className="text-base text-foreground/70">

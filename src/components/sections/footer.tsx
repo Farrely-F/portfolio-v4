@@ -13,7 +13,7 @@ export function FooterSection() {
           <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-6">
             Available for opportunities
           </p>
-          <h2 className="font-sans text-3xl md:text-5xl lg:text-6xl font-semibold leading-[1.05] tracking-tight text-foreground max-w-3xl mb-10">
+          <h2 className="font-display text-3xl md:text-6xl lg:text-7xl font-semibold leading-[1.05] tracking-tight text-foreground max-w-3xl mb-10">
             Let&apos;s build something meaningful together.
           </h2>
           <a
@@ -72,6 +72,29 @@ export function FooterSection() {
           </p>
           <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
             Built with Next.js & Tailwind CSS
+          </p>
+        </div>
+        <div className="mt-4 text-right">
+          <p className="font-mono text-[10px] tracking-wide text-muted-foreground">
+            3D model: &quot;2026 Redbull RB22&quot; by Dave Love SketchFab (@Tyler_Dave),{" "}
+            <a
+              href="https://sketchfab.com/3d-models/2026-redbull-rb22-0a3d24a58e0549d591a5a48c22eec383"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-foreground"
+            >
+              Sketchfab
+            </a>
+            , licensed{" "}
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-foreground"
+            >
+              CC BY 4.0
+            </a>
+            . Textures removed, geometry simplified.
           </p>
         </div>
       </FadeIn>

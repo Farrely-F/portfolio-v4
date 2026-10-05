@@ -1,131 +1,82 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { resumeData } from "@/lib/data"
+import { useRef } from "react"
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
-import { GenerativeGrid } from "@/components/shared/generative-grid"
+import { resumeData } from "@/lib/data"
+import { HeroFallback } from "@/components/hero/hero-fallback"
+
+const ease = [0.22, 1, 0.36, 1] as const
+
+const stats = [
+  { value: "3+", label: "Years Exp." },
+  { value: "5", label: "Projects" },
+  { value: "2", label: "Awards" },
+]
 
 export function HeroSection() {
+  const ref = useRef<HTMLElement>(null)
+  const reduce = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] })
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -90])
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, reduce ? 1 : 0])
+
   return (
-    <section className="relative min-h-[100vh] flex flex-col justify-end overflow-hidden">
-      {/* Generative Grid Background */}
-      <div className="absolute inset-0 z-0">
-        <GenerativeGrid />
-      </div>
+    <section id="top" ref={ref} className="relative flex min-h-[100svh] flex-col">
+      {/* Readability scrim: solid behind copy, clear over the car */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-[1] bg-gradient-to-b from-background/90 via-background/60 to-transparent [mask-image:linear-gradient(to_bottom,#000_60%,transparent)] lg:bg-gradient-to-r lg:from-background lg:via-background/75 lg:to-transparent"
+      />
 
-      {/* Left vertical hairline */}
-      <div className="absolute left-6 md:left-8 top-32 bottom-16 w-px bg-border z-10 hidden md:block" />
-
-      {/* Large watermark year */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: 0.8 }}
-        className="absolute top-1/2 right-0 -translate-y-1/2 z-0 pointer-events-none select-none"
-      >
-        <span className="font-sans text-[20rem] md:text-[28rem] font-bold leading-none tracking-tighter text-foreground/[0.02]">
-          26
-        </span>
-      </motion.div>
-
-      {/* Main content */}
-      <div className="relative z-10 px-6 md:px-8 pt-32 pb-16 md:pb-24 max-w-[1100px] mx-auto w-full">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="space-y-10"
-        >
-          {/* Top row: Location */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
+      <div className="relative z-10 mx-auto flex w-full max-w-[1100px] flex-1 items-start px-6 pb-[42svh] pt-24 md:px-8 md:pt-32 lg:items-center lg:pb-24 lg:pt-44">
+        <motion.div style={{ y: copyY, opacity: copyOpacity }} className="max-w-xl space-y-8">
+          <motion.h1
+            initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.6,
-              delay: 0.1,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground"
+            transition={{ duration: 0.8, delay: 0.2, ease }}
+            className="font-display text-[clamp(3.2rem,9.5vw,7.5rem)] font-semibold leading-[0.9] tracking-tight text-foreground"
           >
-            {resumeData.location}
-          </motion.p>
+            {resumeData.name}
+          </motion.h1>
 
-          {/* Name */}
-          <div className="space-y-4">
-            <motion.h1
-              initial={{ opacity: 0, y: 32 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.2,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="font-sans text-[clamp(2.8rem,9vw,7rem)] font-semibold leading-[0.92] tracking-tight text-foreground"
-            >
-              {resumeData.name}
-            </motion.h1>
-          </div>
-
-          {/* Horizontal rule */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{
-              duration: 0.8,
-              delay: 0.35,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="h-px bg-border origin-left max-w-md"
-          />
-
-          {/* Hook line — the story thesis */}
-          <motion.div
+          <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.7,
-              delay: 0.45,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="max-w-2xl space-y-4"
+            transition={{ duration: 0.7, delay: 0.4, ease }}
+            className="font-sans text-lg font-medium leading-relaxed text-foreground md:text-xl"
           >
-            <p className="font-sans text-lg md:text-xl font-medium leading-relaxed text-foreground">
-              Philosophy-trained. Engineering-obsessed. I build front-end
-              experiences where users meet emerging tech, from Web3 payment
-              rails to AI agent dashboards.
-            </p>
-          </motion.div>
+            Philosophy-trained. Engineering-obsessed. I build front-end experiences where
+            users meet emerging tech, from Web3 payment rails to AI agent dashboards.
+          </motion.p>
 
-          {/* CTA Row */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.6,
-              delay: 0.6,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="flex flex-wrap items-center gap-6 pt-2"
+            transition={{ duration: 0.6, delay: 0.55, ease }}
+            className="flex flex-wrap items-center gap-x-6 gap-y-4"
           >
             <a
-              href={`mailto:${resumeData.email}`}
-              className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-foreground hover:text-brand transition-colors"
+              href="#projects"
+              className="group inline-flex items-center gap-2 bg-foreground px-5 py-3 font-mono text-[11px] uppercase tracking-widest text-background transition-colors hover:bg-brand hover:text-brand-foreground"
             >
-              <span className="relative">
-                Get in Touch
-                <span className="absolute -bottom-0.5 left-0 h-px w-full bg-foreground group-hover:bg-brand transition-colors" />
-              </span>
+              View projects
               <ArrowUpRight
                 size={14}
-                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
             </a>
-            <span className="hidden sm:inline-block h-4 w-px bg-border" />
+            <a
+              href={`mailto:${resumeData.email}`}
+              className="font-mono text-[11px] uppercase tracking-widest text-foreground underline underline-offset-4 transition-colors hover:text-brand"
+            >
+              Get in Touch
+            </a>
             <a
               href={`https://${resumeData.linkedin}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+              className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
             >
               LinkedIn
             </a>
@@ -133,64 +84,31 @@ export function HeroSection() {
               href={`https://${resumeData.github}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+              className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
             >
               GitHub
             </a>
           </motion.div>
 
-          {/* Bottom row: Stats */}
-          <motion.div
+          <motion.dl
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.75 }}
-            className="flex items-center gap-8 md:gap-12 pt-6 border-t border-border max-w-md"
+            className="flex gap-8 border-t border-border pt-5"
           >
-            <div>
-              <span className="font-sans text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
-                3+
-              </span>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mt-1">
-                Years Exp.
-              </p>
-            </div>
-            <div className="h-8 w-px bg-border" />
-            <div>
-              <span className="font-sans text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
-                5
-              </span>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mt-1">
-                Projects
-              </p>
-            </div>
-            <div className="h-8 w-px bg-border" />
-            <div>
-              <span className="font-sans text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
-                2
-              </span>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mt-1">
-                Awards
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.4, duration: 0.6 }}
-          className="absolute bottom-8 left-6 md:left-8"
-        >
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground"
-          >
-            Scroll
-          </motion.div>
+            {stats.map((s) => (
+              <div key={s.label}>
+                <dd className="font-display text-3xl font-semibold tracking-tight text-foreground">{s.value}</dd>
+                <dt className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                  {s.label}
+                </dt>
+              </div>
+            ))}
+          </motion.dl>
         </motion.div>
       </div>
+
+      <HeroFallback />
     </section>
   )
 }

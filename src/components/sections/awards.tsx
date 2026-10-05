@@ -26,7 +26,7 @@ export function AwardsSection() {
               <StaggerItem key={award.title}>
                 <div className="pb-10 border-b border-border last:border-0">
                   <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 mb-3">
-                    <h3 className="font-sans text-lg md:text-xl font-semibold tracking-tight text-foreground">
+                    <h3 className="font-display text-xl md:text-3xl font-semibold tracking-tight text-foreground">
                       {award.title}
                     </h3>
                     <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground shrink-0">

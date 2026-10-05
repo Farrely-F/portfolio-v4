@@ -44,7 +44,7 @@ export function ProjectsSection() {
                           aria-label={`View ${project.name} (opens in a new tab)`}
                           className="inline-flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                         >
-                          <h3 className="font-sans text-xl md:text-2xl font-semibold tracking-tight text-foreground group-hover:text-brand transition-colors duration-300">
+                          <h3 className="font-display text-2xl md:text-4xl font-semibold tracking-tight text-foreground group-hover:text-brand transition-colors duration-300">
                             {project.name}
                           </h3>
                           <ArrowUpRight
@@ -53,7 +53,7 @@ export function ProjectsSection() {
                           />
                         </a>
                       ) : (
-                        <h3 className="font-sans text-xl md:text-2xl font-semibold tracking-tight text-foreground group-hover:text-brand transition-colors duration-300">
+                        <h3 className="font-display text-2xl md:text-4xl font-semibold tracking-tight text-foreground group-hover:text-brand transition-colors duration-300">
                           {project.name}
                         </h3>
                       )}

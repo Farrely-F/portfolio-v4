@@ -1,12 +1,21 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Barlow_Condensed, Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/shared/theme-provider"
+import { SmoothScroll } from "@/components/motion/smooth-scroll"
+import { TimingTower } from "@/components/shared/timing-tower"
+import { RaceWorldMount } from "@/components/world/race-world-mount"
 
 const geistSans = Geist({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+})
+
+const barlow = Barlow_Condensed({
+  variable: "--font-barlow",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
 })
 
 const geistMono = Geist_Mono({
@@ -61,7 +70,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${barlow.variable} antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full bg-background text-foreground font-sans">
@@ -71,7 +80,12 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <SmoothScroll />
+          <RaceWorldMount />
+          <TimingTower />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

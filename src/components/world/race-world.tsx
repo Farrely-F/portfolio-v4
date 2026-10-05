@@ -8,6 +8,7 @@ import * as THREE from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
 import { LIVERIES, type Livery, type PartTone } from "./car-parts"
 import { launchRace, race, resetRace, throttle } from "@/lib/race-state"
+import { Environment } from "./environment"
 
 const CSS_TONES: Record<Exclude<PartTone, "red">, string> = {
   fg: "--foreground",
@@ -22,8 +23,6 @@ const LITE = typeof window !== "undefined" && window.innerWidth < 1024
 const X_MIN = -16
 const X_MAX = LITE ? 38 : 52
 const SPAN = X_MAX - X_MIN
-const ROAD_STEP = 0.9
-const POST_STEP = 3.6
 const STREAKS = LITE ? 20 : 48
 const SPARKS = LITE ? 24 : 56
 
@@ -50,6 +49,12 @@ function useMaterials() {
       edge: new THREE.LineBasicMaterial({ transparent: true, opacity: 0.8 }),
       streak: new THREE.LineBasicMaterial({ transparent: true, opacity: 0.2 }),
       spark: new THREE.PointsMaterial({ size: 0.04, transparent: true, depthWrite: false }),
+      envLine: new THREE.LineBasicMaterial({ transparent: true, opacity: 0.6 }),
+      track: new THREE.MeshBasicMaterial(),
+      runoff: new THREE.MeshBasicMaterial(),
+      crowd: new THREE.PointsMaterial({ size: 0.1, transparent: true, opacity: 0.85, depthWrite: false }),
+      win: new THREE.PointsMaterial({ size: 0.14, transparent: true, depthWrite: false }),
+      star: new THREE.PointsMaterial({ size: 0.22, transparent: true, opacity: 0.7, depthWrite: false, fog: false }),
       curbA: new THREE.MeshBasicMaterial(),
       curbB: new THREE.MeshBasicMaterial(),
       post: new THREE.MeshBasicMaterial(),
@@ -68,6 +73,12 @@ function useMaterials() {
       mats.fill.color.set(bg).lerp(new THREE.Color(v("--foreground")), 0.07)
       mats.road.color.set(v("--muted-foreground"))
       mats.edge.color.set(v("--foreground"))
+      mats.envLine.color.set(v("--muted-foreground"))
+      mats.track.color.set(bg).lerp(new THREE.Color(v("--foreground")), 0.028)
+      mats.runoff.color.set(bg).lerp(new THREE.Color(v("--sector-green")), 0.03)
+      mats.crowd.color.set(v("--muted-foreground"))
+      mats.win.color.set(v("--sector-yellow"))
+      mats.star.color.set(v("--foreground"))
       mats.streak.color.set(v("--foreground"))
       mats.spark.color.set(v("--sector-yellow"))
       mats.curbA.color.set(v("--sector-purple"))
@@ -88,7 +99,7 @@ function useMaterials() {
   useEffect(
     () => () => {
       Object.values(mats.line).forEach((m) => m.dispose())
-      ;[mats.fill, mats.road, mats.edge, mats.streak, mats.spark, mats.curbA, mats.curbB, mats.post, mats.lamp].forEach(
+      ;[mats.fill, mats.road, mats.edge, mats.envLine, mats.track, mats.runoff, mats.crowd, mats.win, mats.star, mats.streak, mats.spark, mats.curbA, mats.curbB, mats.post, mats.lamp].forEach(
         (m) => m.dispose(),
       )
     },
@@ -98,7 +109,7 @@ function useMaterials() {
   return mats
 }
 
-type Mats = ReturnType<typeof useMaterials>
+export type Mats = ReturnType<typeof useMaterials>
 
 /** Scroll beats: each <Interlude data-beat> reports travel through the viewport (t, 0..1) and how much of the viewport it covers. */
 function useBeats() {
@@ -156,6 +167,7 @@ function Sim() {
     race.drs = THREE.MathUtils.damp(race.drs, (armA || armB) && u > 0.6 ? 1 : 0, 6, delta)
 
     const decel = sstep(0.3, 0.6, tC)
+    race.dist += race.speed * delta
     race.speed = (0.8 + 16 * u) * (1 + 0.3 * race.drs) * (1 - 0.88 * decel)
 
     // the world is only unscrimmed while an interlude (nearly) fills the viewport, so text never sits on it
@@ -424,107 +436,6 @@ function Cars({ mats }: { mats: Mats }) {
   )
 }
 
-function Road({ mats }: { mats: Mats }) {
-  const curbA = useRef<THREE.InstancedMesh>(null)
-  const curbB = useRef<THREE.InstancedMesh>(null)
-  const offset = useRef(0)
-  const count = Math.round(SPAN / ROAD_STEP)
-  const dummy = useMemo(() => new THREE.Object3D(), [])
-  const lines = useMemo(() => {
-    const g = new THREE.BufferGeometry()
-    g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(count * 6), 3))
-    return g
-  }, [count])
-  const edgeGeo = useMemo(() => {
-    const g = new THREE.BufferGeometry()
-    g.setAttribute(
-      "position",
-      new THREE.Float32BufferAttribute([X_MIN, 0.005, -2.5, X_MAX, 0.005, -2.5, X_MIN, 0.005, 2.5, X_MAX, 0.005, 2.5], 3),
-    )
-    return g
-  }, [])
-  useEffect(
-    () => () => {
-      lines.dispose()
-      edgeGeo.dispose()
-    },
-    [lines, edgeGeo],
-  )
-
-  useFrame((_, delta) => {
-    offset.current = (offset.current + delta * race.speed) % ROAD_STEP
-    const pos = lines.attributes.position as THREE.BufferAttribute
-    for (let i = 0; i < count; i++) {
-      const x = X_MIN + i * ROAD_STEP - offset.current
-      pos.setXYZ(i * 2, x, 0, -9)
-      pos.setXYZ(i * 2 + 1, x, 0, 9)
-    }
-    pos.needsUpdate = true
-    const place = (mesh: THREE.InstancedMesh | null, shift: number) => {
-      if (!mesh) return
-      for (let i = 0; i < count; i++) {
-        dummy.position.set(X_MIN + i * ROAD_STEP - offset.current + shift, 0.01, i % 2 ? 2.6 : -2.6)
-        dummy.updateMatrix()
-        mesh.setMatrixAt(i, dummy.matrix)
-      }
-      mesh.instanceMatrix.needsUpdate = true
-    }
-    place(curbA.current, 0)
-    place(curbB.current, ROAD_STEP / 2)
-  })
-
-  return (
-    <group>
-      <lineSegments geometry={lines} material={mats.road} frustumCulled={false} />
-      <lineSegments geometry={edgeGeo} material={mats.edge} frustumCulled={false} />
-      <instancedMesh ref={curbA} args={[undefined, undefined, count]} material={mats.curbA} frustumCulled={false}>
-        <boxGeometry args={[0.45, 0.02, 0.2]} />
-      </instancedMesh>
-      <instancedMesh ref={curbB} args={[undefined, undefined, count]} material={mats.curbB} frustumCulled={false}>
-        <boxGeometry args={[0.45, 0.02, 0.2]} />
-      </instancedMesh>
-    </group>
-  )
-}
-
-/** Lamp posts on both sides of the circuit rushing past: the strongest speed cue. */
-function Trackside({ mats, side }: { mats: Mats; side: 1 | -1 }) {
-  const root = useRef<THREE.Group>(null)
-  const posts = useRef<THREE.InstancedMesh>(null)
-  const lamps = useRef<THREE.InstancedMesh>(null)
-  const dist = useRef(0)
-  const dummy = useMemo(() => new THREE.Object3D(), [])
-  const count = Math.round(SPAN / POST_STEP)
-
-  useFrame((_, delta) => {
-    // the near-side posts would cut across the right-side shot
-    if (root.current) root.current.visible = side < 0 || race.sim.kSide < 0.2 || race.sim.kFront > 0.7
-    dist.current = (dist.current + delta * race.speed) % POST_STEP
-    for (let i = 0; i < count; i++) {
-      const x = X_MIN + i * POST_STEP - dist.current + (side > 0 ? POST_STEP / 2 : 0)
-      dummy.position.set(x, 1.3, side * 4.6)
-      dummy.updateMatrix()
-      posts.current?.setMatrixAt(i, dummy.matrix)
-      dummy.position.set(x, 2.62, side * 4.3)
-      dummy.updateMatrix()
-      lamps.current?.setMatrixAt(i, dummy.matrix)
-    }
-    if (posts.current) posts.current.instanceMatrix.needsUpdate = true
-    if (lamps.current) lamps.current.instanceMatrix.needsUpdate = true
-  })
-
-  return (
-    <group ref={root}>
-      <instancedMesh ref={posts} args={[undefined, undefined, count]} material={mats.post} frustumCulled={false}>
-        <boxGeometry args={[0.07, 2.6, 0.07]} />
-      </instancedMesh>
-      <instancedMesh ref={lamps} args={[undefined, undefined, count]} material={mats.lamp} frustumCulled={false}>
-        <boxGeometry args={[0.1, 0.09, 0.7]} />
-      </instancedMesh>
-    </group>
-  )
-}
-
 function Streaks({ mats }: { mats: Mats }) {
   const [data] = useState(() =>
     Array.from({ length: STREAKS }, () => ({
@@ -598,9 +509,7 @@ function Scene() {
     <>
       <Sim />
       <Rig />
-      <Road mats={mats} />
-      <Trackside mats={mats} side={1} />
-      <Trackside mats={mats} side={-1} />
+      <Environment mats={mats} />
       <Streaks mats={mats} />
       <FinishLine mats={mats} />
       <Suspense fallback={null}>

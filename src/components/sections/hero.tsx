@@ -26,7 +26,7 @@ export function HeroSection() {
       {/* Readability scrim: solid behind copy, clear over the car */}
       <div
         aria-hidden
-        className="absolute inset-0 z-[1] bg-gradient-to-b from-background/90 via-background/60 to-transparent [mask-image:linear-gradient(to_bottom,#000_60%,transparent)] lg:bg-gradient-to-r lg:from-background lg:via-background/75 lg:to-transparent"
+        className="absolute inset-0 z-[1] bg-gradient-to-b from-background/90 via-background/60 to-transparent [mask-image:linear-gradient(to_bottom,#000_85%,transparent)] lg:bg-gradient-to-r lg:from-background lg:via-background/75 lg:to-transparent"
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1100px] flex-1 items-start px-6 pb-[42svh] pt-24 md:px-8 md:pt-32 lg:items-center lg:pb-24 lg:pt-44">

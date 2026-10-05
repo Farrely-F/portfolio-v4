@@ -4,6 +4,8 @@ export const race = {
   launchAt: 0,
   /** world scroll speed in units/s (drives road, posts, wheels) */
   speed: 0,
+  /** distance travelled along the circuit (world units); places static track features like the start grid */
+  dist: 0,
   /** rear-wing flap opening, 0 closed .. 1 fully open */
   drs: 0,
   /** 0 = page content fully covers the world, 1 = world fully visible */
@@ -22,6 +24,7 @@ export function throttle(now: number): number {
 
 export function resetRace() {
   race.launchAt = 0
+  race.dist = 0
 }
 
 export function launchRace() {
